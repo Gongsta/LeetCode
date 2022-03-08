@@ -9,7 +9,6 @@ class Solution:
                 right = curr - 1
             elif nums[curr] < target:
                 left = curr + 1
-
             else:
                 return curr
 
