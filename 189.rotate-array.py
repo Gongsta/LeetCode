@@ -12,4 +12,10 @@ class Solution:
 
         """
         
+        temp = nums[-k:]
+        nums[:-k] = nums[len(nums)-k:]
+        nums[:k] = temp
+
+        return nums
+
         
