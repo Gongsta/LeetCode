@@ -1,2 +1,2 @@
-# leetcode-practice
-To practice leetcode. 
+# LeetCode
+My submissions for LeetCode. 
