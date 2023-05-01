@@ -1,0 +1,1 @@
+Tried to use a linked list at first, that works until the point where you want to get the min_index, which you need something extra.
