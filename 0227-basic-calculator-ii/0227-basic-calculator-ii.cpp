@@ -20,7 +20,6 @@ public:
                     int num1 = numbers.back(); numbers.pop_back();
                     int num3 = num1 * num2;
                     numbers.push_back(num3);
-                    cout << "multiplication result:" << num3 << endl;
                     operations.pop_back();
                 }
                 else if (!operations.empty() && operations.back() == '/' && numbers.size() - operations.size() >= 1) {
