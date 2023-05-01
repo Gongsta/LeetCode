@@ -1,1 +1,1 @@
-​
+wow, I'm pretty happy I solved this pretty fast. Doing 2 binary searches
