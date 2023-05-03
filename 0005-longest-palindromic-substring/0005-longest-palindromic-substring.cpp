@@ -2,6 +2,9 @@ class Solution {
 public:
     int dp[1001][1001];
     int recur(int l, int r, string& s) {
+        if (dp[l][r] != -1) {
+            return dp[l][r];
+        }
         if (l == r) {
             return dp[l][r] = 1;
         } else if (l > r) {
@@ -10,9 +13,6 @@ public:
             return dp[l][r] = s[l] == s[r];
         }
         else {
-            if (dp[l][r] != -1) {
-                return dp[l][r];
-            }
             if (s[l] == s[r]) {
                 return dp[l][r] = recur(l+1, r-1, s);
             } else {
