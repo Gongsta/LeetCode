@@ -14,7 +14,7 @@ class Node {
 class LRUCache {
 public:
     int capacity;
-    map<int, Node*> m; // information about access
+    unordered_map<int, Node*> m; // information about access
     Node* head;
     Node* tail;
     int capacity_count;
