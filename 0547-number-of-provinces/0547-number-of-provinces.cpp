@@ -23,10 +23,8 @@ public:
         }
         for (int i=0;i<isConnected.size();i++) {
             if (!visited[i]) {
-                cout << i << endl;
                 groups++;
                 dfs(i);
-                
             }
         }
         return groups;
