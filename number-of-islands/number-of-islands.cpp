@@ -18,15 +18,15 @@ public:
                 if (grid[i][j] == '1') { // Discovered new island that we haven't visited
                     count++;
                     q.push({i,j});
+                    visited[i][j] = true;
                     while (!q.empty()) {
                         vector<int> v = q.front(); q.pop();
-                        if (visited[v[0]][v[1]]) continue;
-                        visited[v[0]][v[1]] = true;
                         for (auto direction: directions) {
                             int new_i = direction[0] + v[0];
                             int new_j = direction[1] + v[1];
                             if (new_i >=0 && new_j >= 0 && new_i < n && new_j < m && !visited[new_i][new_j] && grid[new_i][new_j] == '1') {
                                 q.push({new_i, new_j});
+                                visited[new_i][new_j] = true;
                             }
                         }
                         
