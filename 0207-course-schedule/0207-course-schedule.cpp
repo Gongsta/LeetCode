@@ -1,4 +1,3 @@
-
 class Solution {
 public:
     int color[2001];
