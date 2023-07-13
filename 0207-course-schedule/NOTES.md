@@ -1,1 +1,1 @@
-difference between visited[i] and visited[root]
+​
