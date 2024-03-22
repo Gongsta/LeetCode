@@ -1,19 +1,19 @@
 class Solution {
 public:
     int twoEggDrop(int n) {
-        int num_eggs = 2;
-        int dp[num_eggs + 1][n+1];
+        int k = 2;
+        int dp[k + 1][n+1];
         for (int i=1;i<=n;i++) {
             dp[1][i] = i;
         }
-        for (int k=2;k<=num_eggs;k++) {
+        for (int x=2;x<=k;x++) {
             for (int i=1;i<=n;i++) {
-                dp[k][i] = i;
-                for (int j=1;j<=i/2;j++) {
-                    dp[k][i] = min(1 + max(dp[k-1][j], dp[k][i - j - 1]), dp[k][i]);
+                dp[x][i] = i;
+                for (int j=2;j<i;j++) {
+                    dp[x][i] = min(1 + max(dp[x-1][j - 1], dp[x][i - j]), dp[x][i]);
                 }
             }
         }
-        return dp[2][n];
+        return dp[k][n];
     }
 };
