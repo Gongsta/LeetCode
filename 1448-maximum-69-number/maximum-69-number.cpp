@@ -8,15 +8,21 @@ public:
         }
         return digits;
     }
+    int getDigit(int num, int digit) {
+        return (num / (int)pow(10, digit)) % 10;
+
+    }
     int maximum69Number (int num) {
-        string s_num = to_string(num);
-        for (int i=0;i<s_num.size();i++)  {
-            if (s_num[i] == '6') {
-                s_num[i] = '9';
+        int num_digits = getNumDigits(num);
+        for (int i=num_digits;i>=0;i--)  {
+            if (getDigit(num, i) == 6) {
+                num -= getDigit(num,i) * pow(10, i);
+                num += 9 * pow(10, i);
                 break;
+
             }
         }
-        return stoi(s_num);
+        return num;
         
     }
 };
