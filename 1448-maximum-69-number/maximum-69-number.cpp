@@ -1,23 +1,22 @@
 class Solution {
 public:
-    int maximum69Number (int num) {
-        int ans = num;
-        int num_copy = num;
-        int num_decimals = 0;
-        while (num_copy > 0) {
-            num_copy /= 10;
-            num_decimals++;
-        }
-
+    int getNumDigits(int num) {
+        int digits = 0;
         while (num > 0) {
-            num -= 9 * pow(10, num_decimals - 1);
-            if (num < 0) {
-                ans += 3 * pow(10, num_decimals - 1);
-                return ans;
-            }
-            num_decimals--;
+            digits++;
+            num /= 10;
         }
-        return ans;
+        return digits;
+    }
+    int maximum69Number (int num) {
+        string s_num = to_string(num);
+        for (int i=0;i<s_num.size();i++)  {
+            if (s_num[i] == '6') {
+                s_num[i] = '9';
+                break;
+            }
+        }
+        return stoi(s_num);
         
     }
 };
