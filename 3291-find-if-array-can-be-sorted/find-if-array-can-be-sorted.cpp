@@ -14,7 +14,7 @@ public:
         return num_bits(x) == num_bits(y);
     }
 
-    bool canSortArrayReverse(vector<int> nums) {
+    bool canSortArrayReverse(vector<int>& nums) {
         /*
         We do swap select, 
         */
