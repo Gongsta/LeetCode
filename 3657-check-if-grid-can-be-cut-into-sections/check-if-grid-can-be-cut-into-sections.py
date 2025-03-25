@@ -11,6 +11,8 @@ class Solution:
                 end = new_end
             else:
                 end = max(end, new_end)
+                
+            if (intervals >= 2): break
         return intervals
 
     def checkValidCuts(self, n: int, rectangles: List[List[int]]) -> bool:
