@@ -1,13 +1,13 @@
 class Solution {
 public:
-    vector<long long> generate_primes(int max){
+    vector<int> generate_primes(int max){
         vector<bool> vec(max+1, true);
         vec[0] = false;
         vec[1] = false;
-        vector<long long> primes;
+        vector<int> primes;
         for (long long i = 0;i<max+ 1;i++) {
             if (!vec[i]) continue;
-            primes.push_back(i);
+            primes.push_back((int)i);
             for (long long j = i*i;j<max+1;j+=i) {
                 vec[j] = false;
             }
@@ -17,7 +17,7 @@ public:
 
     vector<int> closestPrimes(int left, int right) {
         vector<int> ans;
-        vector<long long> primes = generate_primes(right);
+        vector<int> primes = generate_primes(right);
         if (primes.size() <= 1) return {-1,-1};
         for (long long i = 0;i<primes.size() - 1;i++) {
             if (primes[i] < left) continue;
