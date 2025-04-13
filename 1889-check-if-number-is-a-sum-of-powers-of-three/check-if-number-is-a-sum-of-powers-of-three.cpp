@@ -11,7 +11,6 @@ public:
         return works;
     }
     bool checkPowersOfThree(int n) {
-        if (n == 1) return true;
         return search(n, 0);
         
     }
