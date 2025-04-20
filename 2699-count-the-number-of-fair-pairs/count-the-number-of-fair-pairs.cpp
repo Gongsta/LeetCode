@@ -34,7 +34,6 @@ public:
                     r = mid - 1;
                 }
             }
-            cout << i << " " << largest << " " << smallest << endl;
             if (largest == i - 1 || smallest == nums.size()) continue;
             ans += (largest - smallest + 1);
         }
