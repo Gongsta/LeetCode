@@ -3,10 +3,10 @@ public:
     int numRabbits(vector<int>& answers) {
         int ans = 0;
         map<int, int> m;
-        for (auto answer: answers) {
+        for (auto& answer: answers) {
             m[answer]++;
         }
-        for (auto x: m) {
+        for (auto& x: m) {
             if (x.first >= x.second) {
                 ans += x.first + 1;
             } else  {
