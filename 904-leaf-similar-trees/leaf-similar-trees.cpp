@@ -17,15 +17,11 @@ public:
         s.push(root);
         while (!s.empty()) {
             TreeNode* node = s.top();s.pop();
-            if (node->left == nullptr && node->right == nullptr) {
+            if (!node->left && !node->right) {
                 leafs.push_back(node->val);
-            } else if (node->left == nullptr) {
-                s.push(node->right);
-            } else if (node->right == nullptr) {
-                s.push(node->left);
             } else {
-                s.push(node->left);
-                s.push(node->right);
+                if (node->right) s.push(node->right);
+                if (node->left) s.push(node->left);
             }
         }
         return leafs;
