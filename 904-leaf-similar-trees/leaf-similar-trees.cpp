@@ -13,6 +13,9 @@ class Solution {
 public:
     vector<int> dfs(TreeNode* root) {
         vector<int> leafs;
+        if (root == nullptr) return leafs;
+
+        // Run DFS
         stack<TreeNode*> s;
         s.push(root);
         while (!s.empty()) {
@@ -24,6 +27,7 @@ public:
                 if (node->left) s.push(node->left);
             }
         }
+        
         return leafs;
 
     }
