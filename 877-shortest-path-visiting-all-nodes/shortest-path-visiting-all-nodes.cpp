@@ -19,9 +19,9 @@ public:
                 }
 
                 for (int neigh: graph[node]) {
-                    if (visited.count({neigh, bitmask})) continue;
-                    visited.insert({neigh, bitmask});
                     int new_bitmask = bitmask | (1 << neigh);
+                    if (visited.count({neigh, new_bitmask})) continue;
+                    visited.insert({neigh, new_bitmask});
                     q.push({neigh, new_bitmask, dist + 1});
                 }
             }
