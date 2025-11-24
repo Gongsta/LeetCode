@@ -6,7 +6,7 @@ public:
         int ans = INT_MAX;
 
         for (int start = 0;start < n; start++) {
-            set<pair<int, int>> visited;
+            vector<vector<bool>> visited(n, vector<bool>(1 << n, false));
             queue<tuple<int, int, int>> q;
             q.push({start, (1 << start), 0});
 
@@ -20,8 +20,8 @@ public:
 
                 for (int neigh: graph[node]) {
                     int new_bitmask = bitmask | (1 << neigh);
-                    if (visited.count({neigh, new_bitmask})) continue;
-                    visited.insert({neigh, new_bitmask});
+                    if (visited[neigh][new_bitmask]) continue;
+                    visited[neigh][new_bitmask] = true;
                     q.push({neigh, new_bitmask, dist + 1});
                 }
             }
