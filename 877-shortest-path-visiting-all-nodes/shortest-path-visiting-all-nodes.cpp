@@ -21,9 +21,10 @@ public:
 
             for (int neigh: graph[node]) {
                 int new_bitmask = bitmask | (1 << neigh);
-                if (visited[neigh][new_bitmask]) continue;
-                visited[neigh][new_bitmask] = true;
-                q.push({neigh, new_bitmask, dist + 1});
+                if (!visited[neigh][new_bitmask]){
+                    visited[neigh][new_bitmask] = true;
+                    q.push({neigh, new_bitmask, dist + 1});
+                }
             }
         }
 
