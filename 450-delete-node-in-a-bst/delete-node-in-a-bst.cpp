@@ -33,7 +33,6 @@ public:
         TreeNode* prev = nullptr;
         TreeNode* curr = root;
         while (curr) {
-            cout << curr->val << endl;
             if (key < curr->val) {
                 prev = curr;
                 curr = curr->left;
@@ -41,58 +40,29 @@ public:
                 prev = curr;
                 curr = curr->right;
             } else { // Node found, update parent
-                // Node to remove is the root node
+                TreeNode** source; // pointer to pointer to simpify logic
                 if (!prev) {
-                    if (curr->right && curr->left) {
-                        // set parent->left to Min of curr->right substree
-                        auto node = RemoveMinOfTree(curr->right);
-                        node->left = curr->left;
-                        if (curr->right != node) {
-                            node->right = curr->right;
-                        }
-                        root = node;
-                    } else if (curr->right) {
-                        root = curr->right;
-                    } else if (curr->left) {
-                        root = curr->left;
-                    } else {
-                        root = nullptr;
-                    }
-                // Node is left of parent and prev is not nullptr
-                } else if (curr->val < prev->val) {
-                    if (curr->right && curr->left) {
-                        // set parent->left to Min of curr->right substree
-                        auto node = RemoveMinOfTree(curr->right);
-                        node->left = curr->left;
-                        if (curr->right != node) { // prevent cycle
-                            node->right = curr->right;
-                        }
-                        prev->left = node;
-                    } else if (curr->right) {
-                        prev->left = curr->right;
-                    } else if (curr->left) {
-                        prev->left = curr->left;
-                    } else {
-                        prev->left = nullptr;
-
-                    }
-                // Node is right of parent, and prev is not nullptr
+                    source = &root; // We are removing the root node, don't need to update any more edges
+                } else  if (curr->val < prev->val) {
+                    source = &(prev->left);
                 } else {
-                    if (curr->left && curr->right) {
-                    // Find min of right subtree, and keep track of its parent
-                        auto node = RemoveMinOfTree(curr->right);
-                        node->left = curr->left;
-                        if (curr->right != node) { // prevent cycle
-                            node->right = curr->right;
-                        }
-                        prev->right = node;
-                    } else if (curr->right) {
-                        prev->right = curr->right;
-                    } else if (curr->left) {
-                        prev->right = curr->left;
-                    } else {
-                        prev->right = nullptr;
+                    source = &(prev->right);
+                }
+
+                if (curr->right && curr->left) {
+                    // set parent->left to Min of curr->right substree
+                    auto node = RemoveMinOfTree(curr->right);
+                    node->left = curr->left;
+                    if (curr->right != node) {
+                        node->right = curr->right;
                     }
+                    *source = node;
+                } else if (curr->right) {
+                    *source = curr->right;
+                } else if (curr->left) {
+                    *source = curr->left;
+                } else {
+                    *source = nullptr;
                 }
                 break;
             }
