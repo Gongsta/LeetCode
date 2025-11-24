@@ -23,7 +23,6 @@ public:
         vector<string> base_letters = digitToLetters(digits[0]);
         vector<string> all_combinations;
         for (const string& letter: base_letters) {
-            cout << letter << endl;
             for (const string& word: combinations) {
                 all_combinations.push_back(letter + word);
             }
