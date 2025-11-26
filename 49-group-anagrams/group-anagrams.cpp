@@ -18,7 +18,7 @@ public:
         vector<vector<string>> ans;
         for (auto [anagram, strings]: anagram_to_idxs) {
             // Store strings
-            ans.push_back(strings);
+            ans.push_back(move(strings));
         }
         return ans;
         
