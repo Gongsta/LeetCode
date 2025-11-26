@@ -11,15 +11,14 @@ public:
         int ans = 0;
         int l = 0;
         int r = 0;
-        set<int> basket;
-        map<int, int> last;
+        map<int, int> count;
         while (r < fruits.size()) {
-            basket.insert(fruits[r]);
-            last[fruits[r]] = r;
-
-            while (basket.size() > 2) { // Move left pointer until basket size is two
-                if (l == last[fruits[l]]) {
-                    basket.erase(fruits[l]);
+            // Try to add the fruit to basket
+            count[fruits[r]]++;
+            // Remove fruits until basket is 0
+            while (count.size() > 2) { 
+                if (--count[fruits[l]] == 0) {
+                    count.erase(fruits[l]);
                 }
                 l++;
             }
