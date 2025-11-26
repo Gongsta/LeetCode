@@ -11,10 +11,12 @@
  */
 class Solution {
 public:
-    int maxPathSingle(TreeNode* root) {
+    int maxPathSingle(TreeNode* root, int& best) {
         if (!root) return 0;
-        int left = maxPathSingle(root->left);
-        int right = maxPathSingle(root->right);
+        int left = maxPathSingle(root->left, best);
+        int right = maxPathSingle(root->right, best);
+        best = max(best, root->val + max(left, 0) + max(right, 0));
+
         return root->val + max(max(left, right), 0);
     }
 
@@ -29,11 +31,9 @@ public:
         If it doesn't 
         max(maxPathSum(node->left), (maxPathSum(node->right))
         */
-        if (!root) return -INT_MAX;
-        int through_node = root->val + max(maxPathSingle(root->left), 0) + max(maxPathSingle(root->right), 0);
-        int not_through = max(maxPathSum(root->left), (maxPathSum(root->right)));
-        if (!root->left && !root->right) return root->val; // To force constraint that path is non zero
-        return max(through_node, not_through);
+        int best = -INT_MAX;
+        maxPathSingle(root, best);
+        return best;
         
     }
 };
