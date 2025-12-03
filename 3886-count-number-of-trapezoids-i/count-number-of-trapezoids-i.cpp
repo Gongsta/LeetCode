@@ -6,10 +6,11 @@ public:
         2. Compute n choose 2 for each y, and add to total number of points.
         3. Iterate over each y, and multiple and remaining number of point computations, remove suffix
         */
-        map<int, long long> y_cnt;
+        unordered_map<int, long long> y_cnt;
         for (vector<int>& point: points) {
             y_cnt[point[1]]++;
         }
+
         int MOD = (int)1e9 + 7;
         long long total_line_combos = 0;
         for (auto& x: y_cnt) {
