@@ -19,10 +19,10 @@ public:
         }
 
         long long ans = 0;
-        for (auto& x: y_cnt) {
-            total_line_combos -= x.second * (x.second - 1) / 2; // remove the current y from the set of possible values
+        for (auto& [y, cnt]: y_cnt) {
+            total_line_combos -= cnt * (cnt - 1) / 2; // remove the current y from the set of possible values
             total_line_combos = ((total_line_combos % MOD) + MOD) % MOD;
-            ans += (x.second * (x.second - 1) / 2) * total_line_combos;
+            ans += (cnt * (cnt - 1) / 2) * total_line_combos;
             ans %= MOD;
         }
         return ans;
