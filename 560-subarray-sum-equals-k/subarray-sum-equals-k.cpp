@@ -5,7 +5,7 @@ public:
         Store prefix
         As you iterate through array, you count the number of times you've seen that prefix.
         */
-        map<int, int> cnt;
+        unordered_map<int, int> cnt;
         cnt[0] = 1; // Base case
 
         int prefix = 0;
