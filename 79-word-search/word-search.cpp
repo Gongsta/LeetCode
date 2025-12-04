@@ -19,9 +19,9 @@ public:
             int new_j  = curr_pos.second + dir[1];
             if (new_i >= 0 && new_i < n && new_j >= 0 && new_j < m && !visited[new_i][new_j]) {
                 works = works || dfs({new_i, new_j}, board, word, idx + 1, visited);
-                visited[new_i][new_j] = false;
             }
         }
+        visited[curr_pos.first][curr_pos.second] = false; // backtrack
         return works;
     }
 
