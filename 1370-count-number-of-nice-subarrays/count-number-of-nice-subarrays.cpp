@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numberOfSubarrays(vector<int>& nums, int k) {
-        map<int, int> cnt;
+        vector<int> cnt(nums.size() + 1, 0);
         cnt[0] = 1;
 
         int odd = 0;
@@ -11,7 +11,7 @@ public:
                 odd++;
             }
             int need = odd - k;
-            ans += cnt[need];
+            if (need >= 0) ans += cnt[need];
             cnt[odd]++;
         }
         return ans;
