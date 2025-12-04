@@ -6,7 +6,7 @@ public:
         for (int r = 0;r<nums.size();r++) {
             if (nums[r] == 0) k--;
             // Increment l until this valid window
-            while (k < 0 && l < nums.size()) {
+            while (k < 0) {
                 if (nums[l] == 0) {
                     k++;
                 }
