@@ -5,11 +5,9 @@ public:
         int ans = 0;
         for (int r = 0;r<nums.size();r++) {
             if (nums[r] == 0) k--;
-            // Increment l until this valid window
+            // Increment l until we get a valid window
             while (k < 0) {
-                if (nums[l] == 0) {
-                    k++;
-                }
+                if (nums[l] == 0) k++;
                 l++;
             }
 
