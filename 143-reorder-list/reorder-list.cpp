@@ -12,38 +12,38 @@ class Solution {
 public:
     void reorderList(ListNode* head) {
         /*
-        Get length of linked list.
-        For nodes n/2 - n, push them to stack.
+        Reverse nodes n/2 - n
         Iterate through linked list and interleave the nodes.
         */
-        stack<ListNode*> s;
-        int n = 0;
-        ListNode* curr = head;
+
+        // Find midpoint
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // Reverse nodes from slow till the end
+        ListNode* curr = slow->next;
+        slow->next = nullptr;
+        ListNode* prev = nullptr;
         while (curr) {
-            n++;
-            curr = curr->next;
-        }
-        curr = head;
-        for (int i = 0;i<(n + 1)/2;i++) {
-            curr = curr->next;
-        }
-        // Push curr to stack
-        while (curr) {
-            s.push(curr);
-            curr = curr->next;
-        }
-        // Interleave
-        curr = head;
-        cout << s.size() << endl;
-        while (curr && !s.empty()) {
-            ListNode* next =  curr->next;
-            ListNode* new_next = s.top();s.pop();
-            curr->next = new_next;
-            new_next->next = next;
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
             curr = next;
-            if (s.empty() && curr) {
-                curr->next = nullptr;
-            }
+        }
+
+        ListNode* new_midpoint = prev;
+        curr = head;
+        // Interleave between head and new_midpoints
+        while (new_midpoint) {
+            ListNode* next = curr->next;
+            ListNode* new_midpoint_next = new_midpoint->next;
+            curr->next = new_midpoint;
+            new_midpoint->next = next;
+            new_midpoint = new_midpoint_next;
+            curr = next;
         }
     }
 };
