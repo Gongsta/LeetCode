@@ -9,34 +9,19 @@ public:
         2. S (prev = R)
         2. R (impossible for collision)
         */
-        char last = 'L';
+        int n = directions.size();
+        int i = 0;
+        int j = n - 1;
+
         int collisions = 0;
-        int right_counter = 0;
-        for (char d: directions) {
-            bool collision = false;
-            if (d == 'L' && last != 'L') {
-                collision = true;
-            } else if (d == 'S' && last == 'R') {
-                collision =  true;
-            } else if (d == 'R') {
-                right_counter++;
-            }
-            if (collision) {
-                if (last == 'R') {
-                    collisions += right_counter;
-                    if (d == 'L') {
-                        collisions++;
-                    }
-                    right_counter = 0;
-                } else {
-                    collisions++;
-                }
-                last = 'S'; // stationary state
-            } else {
-                last = d;
-            }
+        
+        while (i < n && directions[i] == 'L') i++;
+        while (j >=0  && directions[j] == 'R') j--;
+        for (int k = i;k<=j;k++) {
+            if (directions[k] != 'S') collisions++;
         }
         return collisions;
+
         
     }
 };
