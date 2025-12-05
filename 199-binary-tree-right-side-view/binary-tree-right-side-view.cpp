@@ -11,25 +11,23 @@
  */
 class Solution {
 public:
-    map<int, TreeNode*> depth_to_node;
-    void dfs(TreeNode* node, int depth) {
+    int max_depth = -1;
+    void dfs(TreeNode* node, int depth, vector<int>& depth_to_val) {
         if (!node) return;
-        dfs(node->right, depth + 1);
-        if (!depth_to_node.count(depth)) {
-            depth_to_node[depth] = node;
+        dfs(node->right, depth + 1, depth_to_val);
+        if (depth_to_val[depth] == INT_MIN) {
+            depth_to_val[depth] = node->val;
         }
-
-        dfs(node->left, depth + 1);
+        max_depth = max(max_depth, depth);
+        dfs(node->left, depth + 1, depth_to_val);
 
     }
     vector<int> rightSideView(TreeNode* root) {
         // Traverse tree
-        dfs(root, 0);
-        vector<int> ans;
-        for (auto& [depth, node]: depth_to_node) {
-            ans.push_back(node->val);
-        }
-        return ans;
+        vector<int> depth_to_val(101, INT_MIN);
+        dfs(root, 0, depth_to_val);
+        depth_to_val.resize(max_depth + 1);
+        return depth_to_val;
         
     }
 };
