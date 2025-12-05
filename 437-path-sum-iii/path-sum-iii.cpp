@@ -11,16 +11,21 @@
  */
 class Solution {
 public:
-    int dfs(TreeNode* root, long long targetSum) {
+    unordered_map<long long, int>  prefix;
+    int dfs(TreeNode* root, long long targetSum, long long currSum) {
         if (!root) return 0;
-        int total = 0;
-        if (root->val == targetSum) total++;
-        total += dfs(root->left, targetSum - root->val) + dfs(root->right, targetSum - root->val);
+        currSum += root->val;
+        long long need = currSum - targetSum;
+        int total = prefix[need];
+        prefix[currSum]++;
+        total += dfs(root->left, targetSum, currSum) + dfs(root->right, targetSum, currSum);
+        prefix[currSum]--;
         return total;
     }
 
     int pathSum(TreeNode* root, int targetSum) {
         if (!root) return 0;
-        return dfs(root, targetSum) + pathSum(root->left, targetSum) + pathSum(root->right, targetSum);
+        prefix[0] = 1;
+        return dfs(root, targetSum, 0);
     }
 };
