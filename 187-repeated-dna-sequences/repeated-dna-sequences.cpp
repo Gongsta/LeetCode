@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<string> findRepeatedDnaSequences(string s) {
         // how do we hash efficiently?
-        map<string, int> sequences;
+        unordered_map<string, int> sequences;
         string curr_word;
         for (char c: s) {
             curr_word += c;
