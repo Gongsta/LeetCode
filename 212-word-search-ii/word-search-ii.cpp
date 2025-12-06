@@ -1,14 +1,9 @@
 
 struct Node {
     char c;
-    Node* neighs[26];
+    map<char, Node*> neighs;
     bool isWord = false;
-    Node(char c): c{c} {
-        for (int i = 0;i<26;i++) {
-            neighs[i] = nullptr;
-        }
-
-    }
+    Node(char c): c{c} {}
 };
 
 struct Trie {
@@ -21,10 +16,10 @@ struct Trie {
     void insert(const string& word) {
         Node* curr = root;
         for (char c: word) {
-            if (!curr->neighs[c - 'a']) {
-                curr->neighs[c - 'a'] = new Node(c);
+            if (!curr->neighs.count(c)) {
+                curr->neighs[c] = new Node(c);
             }
-            curr = curr->neighs[c - 'a'];
+            curr = curr->neighs[c];
         }
         curr->isWord = true;
     } 
@@ -44,20 +39,19 @@ public:
         return row >= 0 && col >= 0 && row < n_rows && col < n_cols;
 
     }
-    void dfs(int i, int j, Node* node, vector<vector<bool>>& visited, vector<vector<char>>& board, string& curr_word, vector<string>& valid_words) {
-        if (node->isWord) { // valid word, lets add it to set
-            valid_words.push_back(curr_word);
-            node->isWord = false;
+    void dfs(int i, int j, Node* node, vector<vector<bool>>& visited, vector<vector<char>>& board, string& curr_word, set<string>& valid_words) {
+        Node* new_node = node->neighs[curr_word.back()];
+        if (!new_node) return;// invalid string that we are building
+        if (new_node->isWord) { // valid word, lets add it to set
+            valid_words.insert(curr_word);
         }
-        for (const auto& dir: dirs) {
+        
+        for (auto& dir: dirs) {
             int new_i = i + dir[0];
             int new_j = j + dir[1];
             if (in_bounds(new_i, new_j, board.size(), board[0].size()) && !visited[new_i][new_j]) {
-                char next_char = board[new_i][new_j];
-                if (!node->neighs[next_char - 'a']) continue; // skip if this is invalid node
                 visited[new_i][new_j] = true;
-                curr_word.push_back(next_char);
-                Node* new_node = node->neighs[next_char - 'a'];
+                curr_word.push_back(board[new_i][new_j]);
                 dfs(new_i, new_j, new_node, visited, board, curr_word, valid_words);
                 curr_word.pop_back();
                 visited[new_i][new_j] = false;
@@ -77,24 +71,21 @@ public:
         for (auto& word: words) {
             trie.insert(word);
         }
-        vector<string> valid_words;
+        set<string> valid_words;
         int m = board.size();
         int n = board[0].size();
         vector<vector<bool>> visited(m, vector<bool>(n, false));
-        string curr_word;
-        curr_word.reserve(n * m);
         for (int i = 0;i<m;i++) {
             for (int j = 0;j<n;j++) {
-                Node* node = trie.root->neighs[board[i][j] - 'a'];
-                if (!node) continue;
-                curr_word.clear();
-                curr_word.push_back(board[i][j]);
+                string curr_word{board[i][j]};
                 visited[i][j] = true;
                 // Run DFS
-                dfs(i, j, node, visited, board, curr_word, valid_words);
+                dfs(i, j, trie.root, visited, board, curr_word, valid_words);
                 visited[i][j] = false;
             }
         }
-        return valid_words;
+        vector<string> ans(valid_words.size());
+        copy(valid_words.begin(), valid_words.end(), ans.begin());
+        return ans;
     }
 };
