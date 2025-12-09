@@ -4,27 +4,26 @@ public:
     int specialTriplets(vector<int>& nums) {
         /*
         */
-        unordered_map<int, vector<int>> num_to_pos;
+        unordered_map<int, int> left;
+        unordered_map<int, int> right;
         for (int i = 0;i<nums.size();i++) {
-            num_to_pos[nums[i]].push_back(i);
+            right[nums[i]]++;
         }
+
         int ans = 0;
         for (int i = 0;i<nums.size();i++) {
+            // Decrement right side cnt
+            right[nums[i]]--;
+
             int target_num = 2 * nums[i];
-            const vector<int>& pos = num_to_pos[target_num];
+            long long n_left = left[target_num];
+            long long n_right = right[target_num];
 
-            auto it = upper_bound(pos.begin(), pos.end(), i);
-
-            if (it == pos.begin()) continue; // no number found
-
-            long long n_left = it - pos.begin(); // Number of indices smaller or equal
-            long long n_right = pos.end() - it; // number of indices bigger
-
-            if (*(it - 1) == i) n_left--;
-
-            
             ans += (n_left * n_right) % MOD;
             ans %= MOD;
+            
+            //Increment left side cnt
+            left[nums[i]]++;
         }
         return ans;
         
