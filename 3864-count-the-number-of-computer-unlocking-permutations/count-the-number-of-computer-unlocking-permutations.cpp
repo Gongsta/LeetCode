@@ -3,9 +3,14 @@ class Solution {
 public:
 
     int countPermutations(vector<int>& complexity) {
-        map<int, int> freq;
-        for (const int& c: complexity) freq[c]++;
-        auto& [min_num, cnt] = *(freq.begin());
+        int min_num = INT_MAX;
+        int cnt = 0;
+        
+        for (const int& c: complexity){
+            if (c < min_num) min_num = c;
+            if (c == min_num) cnt++;
+        }
+
         if (cnt > 1) return 0;
         if (complexity[0] != min_num) return 0;
 
