@@ -7,7 +7,10 @@ public:
         int cnt = 0;
         
         for (const int& c: complexity){
-            if (c < min_num) min_num = c;
+            if (c < min_num) {
+                min_num = c;
+                cnt = 0;
+            }
             if (c == min_num) cnt++;
         }
 
