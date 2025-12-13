@@ -15,7 +15,7 @@ public:
             }
         }
 
-        dp[0][0][k - min(grid[0][0], 1)] = grid[0][0]; // score
+        dp[0][0][k] = 0; // score
         for (int i = 0;i<n;i++) {
             for (int j = 0;j<m;j++) {
                 int cost = min(grid[i][j], 1);
