@@ -15,9 +15,7 @@ public:
                     }
                 }
             }
-            if (num_divisors == 4) {
-                ans += sum;
-            }
+            if (num_divisors == 4) ans += sum;
         }
         return ans;
 
