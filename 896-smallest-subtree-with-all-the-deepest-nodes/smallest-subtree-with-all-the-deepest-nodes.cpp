@@ -11,19 +11,18 @@
  */
 class Solution {
 public:
-    int getDepth(TreeNode* root, int curr_depth) {
-        if (!root) return curr_depth - 1;
-        return max(getDepth(root->left, curr_depth + 1), getDepth(root->right, curr_depth + 1));
+    pair<int, TreeNode*> solve(TreeNode* root) {
+        if (!root) return {0, nullptr};
+        auto [left_depth, ln] = solve(root->left);
+        auto [right_depth, rn] = solve(root->right);
+        if (left_depth < right_depth) return {right_depth + 1, rn};
+        if (right_depth < left_depth) return {left_depth + 1, ln};
+        // This is the first common ancestor where both left and right are rooted
+        return {left_depth + 1, root};
     }
 
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
-        if (!root->left && !root->right) return root;
-        int left_depth = getDepth(root->left, 0);
-        int right_depth = getDepth(root->right, 0);
-        if (!root->left || left_depth < right_depth) return subtreeWithAllDeepest(root->right);
-        if (!root->right || right_depth < left_depth) return subtreeWithAllDeepest(root->left);
-        // This is the first common ancestor where both left and right are rooted
-        return root;
+        return solve(root).second;
     }
 
 };
