@@ -11,24 +11,22 @@
  */
 class Solution {
 public:
-    unordered_map<TreeNode*, int> sum;
     long long ans = 0;
-    long long total_sum;
+    long long total;
     int computeSum(TreeNode* root) {
         if (!root) return 0;
-        return sum[root] = root->val + computeSum(root->left) + computeSum(root->right);
+        return root->val + computeSum(root->left) + computeSum(root->right);
     }
 
-    void dfs(TreeNode* root) {
-        if (!root) return;
-        ans = max(ans, (total_sum - sum[root]) * sum[root]);
-        dfs(root->left);
-        dfs(root->right);
+    int dfs(TreeNode* root) {
+        if (!root) return 0;
+        int s = root->val + dfs(root->left) + dfs(root->right);
+        ans = max(ans, (total - s) * s);
+        return s;
     }
 
     int maxProduct(TreeNode* root) {
-        computeSum(root);
-        total_sum = sum[root];
+        total = computeSum(root);
         dfs(root);
         return ans % (long long)(1e9 + 7);
         
