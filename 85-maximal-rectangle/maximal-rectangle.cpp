@@ -4,32 +4,27 @@ public:
         int n = matrix.size();
         int m = matrix[0].size();
         // we need some sort of heap that stores the current smallest
-        vector<vector<int>> count(n, vector<int>(m, 0));
-        for (int col = 0;col<m;col++) {
-            for (int row = n-1;row>=0;row--) {
-                if (matrix[row][col] == '0') {
-                    count[row][col] = 0;
-                } else {
-                    if (row == n - 1) {
-                        count[row][col] = 1;
-                    } else {
-                        count[row][col] = count[row+1][col] + 1;
-                    }
-                }
-            }
-        }
-
+        vector<int> hist(m, 0);
         int ans = 0;
-        for (int row = 0;row<n;row++) {
-            for (int col = 0;col<m;col++) {
-                int height = INT_MAX;
-                for (int left = col;left>=0;left--) {
-                    height = min(height, count[row][left]);
-                    ans = max(ans, (col - left + 1) * height);
+        for (int i = 0;i<n;i++) {
+            for (int j = 0;j<m;j++) {
+                hist[j] = matrix[i][j] == '0' ? 0 : hist[j] + 1;
+            }
+            
+            stack<int> st;
+            for (int k = 0;k<=m;k++) {
+                int cur = k == m ? 0 : hist[k];
+                while (!st.empty() && hist[st.top()] > cur) {
+                    // process it
+                    int height = hist[st.top()]; 
+                    st.pop();
+                    int prev = st.empty() ? -1 : st.top();
+                    int width = k -1 - prev;
+                    ans = max(ans, height * width);
                 }
+                st.push(k);
             }
         }
-
         return ans;
         
     }
