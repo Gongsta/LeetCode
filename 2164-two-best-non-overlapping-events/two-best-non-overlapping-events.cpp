@@ -12,7 +12,7 @@ public:
         for (int i = 0;i<n;i++) {
             ans = max(ans, events[i][2]);
             // binary search start greater than the current end
-            vector<int> v = {events[i][1], INT_MAX};
+            vector<int> v = {events[i][1], INT_MAX, INT_MAX};
             auto it = upper_bound(events.begin(), events.end(), v);
             if (it != events.end()) {
                 int idx = it - events.begin();
