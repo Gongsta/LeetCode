@@ -2,7 +2,7 @@ class Solution {
 public:
     long long maxRunTime(int n, vector<int>& batteries) {
         long long l = 1;
-        long long r = 1e18;
+        long long r = accumulate(batteries.begin(), batteries.end(), 0ll) / (long long)n + 1ll;
         long long ans = 0;
         sort(batteries.begin(), batteries.end());
         reverse(batteries.begin(), batteries.end());
