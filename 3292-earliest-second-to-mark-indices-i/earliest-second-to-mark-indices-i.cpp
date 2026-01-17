@@ -1,18 +1,18 @@
 class Solution {
 public:
     bool isPossible(vector<int>& nums, vector<int>& changeIndices, int m) {
-        unordered_set<int> seen;
+        vector<bool> seen(nums.size(), false);
         long long need = 0;
         for (int i = m-1;i>=0;i--) {
-            if (!seen.count(changeIndices[i] - 1)) {
-                seen.insert(changeIndices[i] - 1);
+            if (!seen[changeIndices[i] - 1]) {
+                seen[changeIndices[i] - 1] = true;
                 need += nums[changeIndices[i] - 1];
             } else {
                 need--;
                 need = max(0ll, need);
             }
         }
-        return (need == 0) && (seen.size() == nums.size());
+        return (need == 0) && (accumulate(seen.begin(), seen.end(), 0) == nums.size());
 
     }
     int earliestSecondToMarkIndices(vector<int>& nums, vector<int>& changeIndices) {
