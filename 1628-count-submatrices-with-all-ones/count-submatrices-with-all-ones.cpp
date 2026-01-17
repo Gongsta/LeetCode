@@ -5,6 +5,7 @@ public:
         int m = mat[0].size();
         int ans = 0;
         vector<int> hist(m, 0);
+        vector<pair<int, int>> st; // {height, count}
         for (int i = 0;i<n;i++) {
             for (int j = 0;j<m;j++) {
                 if (mat[i][j] == 1) {
@@ -13,18 +14,18 @@ public:
                     hist[j] = 0;
                 }
             }
-            stack<pair<int, int>> st; // {height, count}
             int sum = 0;
+            st.clear();
             for (int j = 0;j<m;j++) {
                 int count = 1;
                 int height = hist[j];
-                while (!st.empty() && height <= st.top().first)  {
-                    sum -= (st.top().first * st.top().second);
-                    count += st.top().second;
-                    st.pop();
+                while (!st.empty() && height <= st.back().first)  {
+                    sum -= (st.back().first * st.back().second);
+                    count += st.back().second;
+                    st.pop_back();
                 }
                 sum += height * count;
-                st.push({height, count});
+                st.push_back({height, count});
                 ans += sum;
             }
         }
