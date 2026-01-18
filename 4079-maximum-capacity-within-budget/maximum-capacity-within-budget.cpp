@@ -15,21 +15,18 @@ public:
         }
         
         int ans = 0;
+        int l = -1;
         for (int i = n-1;i>=0;i--) {
-            int l = 0;
-            int r = i - 1;
+            l = min(l, i-1);
             int remaining_budget = budget - cnc[i].first;
+            while (l + 1 < i && cnc[l+1].first < remaining_budget) {
+                l++;
+            }
             if (remaining_budget > 0) {
                 ans = max(ans, cnc[i].second);
             }
-            while (l <= r) {
-                int mid = (l + r) / 2;
-                if (cnc[mid].first < remaining_budget) {
-                    ans = max(ans, cnc[i].second + prefix[mid]);
-                    l = mid + 1;
-                }  else {
-                    r = mid - 1;
-                }
+            if (l >= 0) {
+                ans = max(ans, cnc[i].second + prefix[l]);
             }
         }
         return ans;
