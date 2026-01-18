@@ -1,6 +1,6 @@
 class AuctionSystem {
     unordered_map<int, unordered_map<int,int>> useritem_to_amount;
-    map<int, set<pair<int, int>, greater<pair<int, int>>>> item_to_user;
+    unordered_map<int, set<pair<int, int>, greater<pair<int, int>>>> item_to_user;
 public:
     AuctionSystem() {
     }
