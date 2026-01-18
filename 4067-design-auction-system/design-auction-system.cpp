@@ -1,35 +1,35 @@
 class AuctionSystem {
     unordered_map<int, unordered_map<int,int>> useritem_to_amount;
-    unordered_map<int, priority_queue<pair<int, int>>> item_to_user; 
+    map<int, set<pair<int, int>, greater<pair<int, int>>>> item_to_user;
 public:
     AuctionSystem() {
-        }
+    }
     
     void addBid(int userId, int itemId, int bidAmount) {
-        useritem_to_amount[userId][itemId] = bidAmount;
-        item_to_user[itemId].push({bidAmount, userId});
+        if (useritem_to_amount[userId].count(itemId)) {
+            updateBid(userId, itemId, bidAmount);
+        } else {
+            useritem_to_amount[userId][itemId] = bidAmount;
+            item_to_user[itemId].insert({bidAmount, userId});
+        }
     }
     
     void updateBid(int userId, int itemId, int newAmount) {
+        int bidAmount = useritem_to_amount[userId][itemId];
         useritem_to_amount[userId][itemId] = newAmount;
-        item_to_user[itemId].push({newAmount, userId});
+        item_to_user[itemId].erase({bidAmount, userId});
+        item_to_user[itemId].insert({newAmount, userId});
     }
     
     void removeBid(int userId, int itemId) {
+        int amnt = useritem_to_amount[userId][itemId];
         useritem_to_amount[userId].erase(itemId);
+        item_to_user[itemId].erase({amnt, userId});
     }
     
     int getHighestBidder(int itemId) {
-        int highest_user = -1;
-        while (!item_to_user[itemId].empty()) {
-            auto [amnt, user] = item_to_user[itemId].top();
-            if (useritem_to_amount[user][itemId] == amnt) {
-                highest_user = user;
-                break;
-            }
-            item_to_user[itemId].pop();
-        }
-        return highest_user;
+        if (item_to_user[itemId].size() == 0) return -1;
+        return item_to_user[itemId].begin()->second;
     }
 };
 
