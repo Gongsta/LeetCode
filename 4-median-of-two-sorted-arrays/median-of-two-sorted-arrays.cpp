@@ -7,7 +7,7 @@ public:
         int half = (total + 1) / 2;
 
         int l = 0;
-        int r = min((int)nums1.size(), half);
+        int r = nums1.size();
 
         while (l <= r) {
             int mid = (l + r) / 2;
