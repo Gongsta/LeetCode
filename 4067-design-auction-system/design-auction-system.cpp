@@ -6,24 +6,24 @@ public:
     }
     
     void addBid(int userId, int itemId, int bidAmount) {
-        if (useritem_to_amount[userId].count(itemId)) {
+        if (useritem_to_amount[itemId].count(userId)) {
             updateBid(userId, itemId, bidAmount);
         } else {
-            useritem_to_amount[userId][itemId] = bidAmount;
+            useritem_to_amount[itemId][userId] = bidAmount;
             item_to_user[itemId].insert({bidAmount, userId});
         }
     }
     
     void updateBid(int userId, int itemId, int newAmount) {
-        int bidAmount = useritem_to_amount[userId][itemId];
-        useritem_to_amount[userId][itemId] = newAmount;
+        int bidAmount = useritem_to_amount[itemId][userId];
+        useritem_to_amount[itemId][userId] = newAmount;
         item_to_user[itemId].erase({bidAmount, userId});
         item_to_user[itemId].insert({newAmount, userId});
     }
     
     void removeBid(int userId, int itemId) {
-        int amnt = useritem_to_amount[userId][itemId];
-        useritem_to_amount[userId].erase(itemId);
+        int amnt = useritem_to_amount[itemId][userId];
+        useritem_to_amount[itemId].erase(userId);
         item_to_user[itemId].erase({amnt, userId});
     }
     
