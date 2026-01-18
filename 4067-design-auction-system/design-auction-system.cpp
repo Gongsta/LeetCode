@@ -1,6 +1,6 @@
 class AuctionSystem {
     map<pair<int,int>, int> useritem_to_amount;
-    map<int, priority_queue<pair<int, int>>> item_to_user; 
+    unordered_map<int, priority_queue<pair<int, int>>> item_to_user; 
 public:
     AuctionSystem() {
         }
