@@ -1,51 +1,35 @@
 class Solution {
 public:
     int maxSideLength(vector<vector<int>>& mat, int threshold) {
-        int n = mat.size();
-        int m = mat[0].size();
-        int ans = 0;
-        vector<vector<int>> prefix_row = mat;
-        vector<vector<int>> prefix_col = mat;
-        for (int row = 0;row<n;row++) {
-            for (int col = 0;col < m;col++) {
-                if (col > 0) {
-                    prefix_row[row][col] += prefix_row[row][col-1];
-                }
-                if (row > 0) {
-                    prefix_col[row][col] += prefix_col[row -1][col];
+        int n = mat.size(), m = mat[0].size();
+        vector<vector<long long>> ps(n + 1, vector<long long>(m + 1, 0));
 
-                }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                ps[i+1][j+1] = ps[i+1][j] + ps[i][j+1] - ps[i][j] + mat[i][j];
             }
         }
 
-        for (int row = 0;row<n;row++) {
-            for (int col = 0;col < m;col++) {
-                int curr_sum = 0;
-                for (int width = 1;width<=min(n - row, m - col);width++) {
-                    int new_row = row + width - 1;
-                    int new_col = col + width - 1;
-                    if (col == 0) {
-                        curr_sum += prefix_row[new_row][new_col];
-                    } else {
-                        curr_sum += prefix_row[new_row][new_col] - prefix_row[new_row][col - 1];
-                    }
+        auto squareSum = [&](int r, int c, int k) -> long long {
+            int r2 = r + k, c2 = c + k;
+            return ps[r2][c2] - ps[r][c2] - ps[r2][c] + ps[r][c];
+        };
 
-                    if (row == 0) {
-                        curr_sum += prefix_col[new_row][new_col];
-                    } else {
-                        curr_sum += prefix_col[new_row][new_col] - prefix_col[row - 1][new_col];
-                    }
-                    curr_sum -= mat[new_row][new_col]; // double counted
-
-                    if (curr_sum <= threshold) {
-                        ans = max(ans, width);
-                    } else {
-                        break;
-                    }
-                } 
+        auto ok = [&](int k) -> bool {
+            for (int i = 0; i + k <= n; i++) {
+                for (int j = 0; j + k <= m; j++) {
+                    if (squareSum(i, j, k) <= threshold) return true;
+                }
             }
+            return false;
+        };
+
+        int lo = 0, hi = min(n, m);
+        while (lo < hi) {
+            int mid = (lo + hi + 1) / 2;
+            if (ok(mid)) lo = mid;
+            else hi = mid - 1;
         }
-        return ans;
-        
+        return lo;
     }
 };
