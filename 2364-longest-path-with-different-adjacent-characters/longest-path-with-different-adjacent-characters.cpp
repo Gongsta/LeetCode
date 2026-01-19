@@ -6,11 +6,10 @@ public:
 
         int ans = 0;
 
-        function<tuple<int,int, int>(int)> longestPathInner = [&](int curr) -> tuple<int,int,int> {
+        function<int(int)> longestPathInner = [&](int curr) -> int {
             pair<int, int> top_two_includes = {0, 0};
-            int exclude = 0;
             for (int neigh: adj[curr]) {
-                auto [include_neigh, exclude_neigh, include_both_neigh] = longestPathInner(neigh);
+                int include_neigh = longestPathInner(neigh);
                 if (s[neigh] != s[curr]) {
                     if (include_neigh > top_two_includes.second) {
                         top_two_includes.first = top_two_includes.second;
@@ -18,13 +17,10 @@ public:
                     } else if (include_neigh > top_two_includes.first) {
                         top_two_includes.first = include_neigh;
                     }
-                } else {
-                    exclude = max(exclude, exclude_neigh);
-                    exclude = max(exclude, include_both_neigh);
-                }
+                } 
             }
             ans = max(ans, top_two_includes.first + top_two_includes.second + 1);
-            return {top_two_includes.second + 1, exclude, top_two_includes.first + top_two_includes.second + 1};
+            return top_two_includes.second + 1;
         };
 
         longestPathInner(0);
