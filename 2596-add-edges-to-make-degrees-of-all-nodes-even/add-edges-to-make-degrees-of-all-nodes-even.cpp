@@ -31,21 +31,9 @@ public:
             }
             return false;
         } else if (odds.size() == 4) {
-            for (int i = 0;i<odds.size();i++) {
-                for (int j = 0;j<odds.size();j++) {
-                    if (i != j) {
-                    for (int k = 0;k<odds.size();k++) {
-                        if (k != i && k != j) {
-                            for (int l = 0;l<odds.size();l++) {
-                                if  (l != i && l != j && l != k)
-                                    // Check this
-                                    if (!adj[odds[i]].count(odds[j]) && !adj[odds[k]].count(odds[l])) return true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            if (!adj[odds[0]].count(odds[1]) && !adj[odds[2]].count(odds[3])) return true;
+            if (!adj[odds[0]].count(odds[2]) && !adj[odds[1]].count(odds[3])) return true;
+            if (!adj[odds[0]].count(odds[3]) && !adj[odds[1]].count(odds[2])) return true;
         }
         return false;
         
