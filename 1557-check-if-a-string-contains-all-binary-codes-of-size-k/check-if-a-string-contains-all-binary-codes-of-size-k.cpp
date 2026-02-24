@@ -9,7 +9,6 @@ public:
             cur = cur & bmask;
             if (i >= k - 1) ss.insert(cur);
         }
-        cout << ss.size() << endl;
         return ss.size() == (1 << k);
     }
 };
