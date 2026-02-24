@@ -13,7 +13,6 @@ class Solution {
 public:
     void solve(TreeNode* node, int curr_num, int& total) {
         curr_num = (curr_num << 1) + node->val;
-        cout << curr_num << endl;
         if (node->right) solve(node->right, curr_num, total);
         if (node->left) solve(node->left, curr_num, total);
         if (!node->left && !node->right) total += curr_num;
